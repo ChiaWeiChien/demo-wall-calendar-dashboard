@@ -1,0 +1,303 @@
+:root{
+  --bg: #0b0f14;
+  --card: rgba(255,255,255,0.06);
+  --card2: rgba(255,255,255,0.08);
+  --text: rgba(255,255,255,0.92);
+  --muted: rgba(255,255,255,0.65);
+  --muted2: rgba(255,255,255,0.48);
+  --line: rgba(255,255,255,0.12);
+  --yi: rgba(60, 210, 140, 0.20);
+  --ji: rgba(255, 120, 120, 0.20);
+}
+
+*{ box-sizing: border-box; }
+html,body{ height:100%; margin:0; }
+body{
+  background: radial-gradient(1200px 800px at 20% 10%, rgba(255,255,255,0.10), transparent 60%),
+              radial-gradient(1000px 700px at 90% 30%, rgba(80,170,255,0.10), transparent 55%),
+              var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+               "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  overflow: hidden;
+}
+
+.screen{
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  padding: 24px 28px calc(18px + env(safe-area-inset-bottom));
+  gap: 18px;
+}
+
+/* ===== Layout A ===== */
+.layout-a{
+  flex: 1;
+  min-height: 0;
+  display:grid;
+  grid-template-columns: 1.15fr 0.85fr;  /* left bigger */
+  gap: 18px;
+}
+
+.panel{
+  height:100%;
+  padding: 18px 20px;
+  background: linear-gradient(180deg, var(--card2), var(--card));
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  backdrop-filter: blur(10px);
+  min-height: 0;
+}
+
+.panel-title{
+  margin: 0 0 12px 0;
+  font-size: 18px;
+  color: var(--muted);
+  font-weight: 800;
+  letter-spacing: 0.6px;
+}
+
+/* Left date panel */
+.panel-date{
+  display:flex;
+  flex-direction:column;
+}
+
+.date-md{
+  font-size: 22px;
+  color: var(--muted);
+  font-weight: 700;
+  letter-spacing: 0.8px;
+}
+
+/* ✅ Force correct stacking order + center align */
+.date-huge{
+  margin-top: 10px;
+  padding: 10px 0 8px;
+
+  display: flex;
+  flex-direction: column;   /* IMPORTANT: not column-reverse */
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+}
+
+.mmdd{
+  font-size: 140px;      /* Month line */
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: 0.6px;
+}
+
+.dow{
+  margin-top: 10px;
+  font-size: 52px;
+  font-weight: 900;
+  line-height: 1.0;
+}
+
+.yyyy{
+  margin-top: 8px;
+  font-size: 36px;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.date-meta{
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+}
+
+.meta-row{
+  font-size: 22px;
+  line-height: 1.25;
+}
+
+.meta-row.muted{ color: var(--muted2); }
+.meta-label{ color: var(--muted2); }
+
+/* Right stack */
+.right-stack{
+  display:grid;
+  grid-template-rows: 1.05fr 0.95fr; /* weather slightly taller */
+  gap: 18px;
+  min-height: 0;
+}
+
+.panel-weather, .panel-lunar{
+  display:flex;
+  flex-direction:column;
+  min-height: 0;
+}
+
+/* Weather block (mostly same as before, tuned slightly) */
+.weather{
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+  flex:1;
+  min-height:0;
+}
+
+.wx-main{
+  display:flex;
+  align-items:center;
+  gap: 12px;
+  padding: 6px 0 2px;
+}
+
+.wx-icon{
+  font-size: 54px;
+  line-height: 1;
+  width: 64px;
+  text-align:center;
+  opacity: 0.95;
+}
+
+.wx-text{
+  font-size: 28px;
+  font-weight: 900;
+  margin-bottom: 4px;
+}
+
+.wx-temp{
+  display:flex;
+  align-items:baseline;
+  gap: 10px;
+}
+.wx-now{
+  font-size: 42px;
+  font-weight: 950;
+}
+.wx-feels{
+  font-size: 18px;
+  color: var(--muted);
+}
+
+.wx-grid{
+  margin-top: 6px;
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.wx-kv{
+  padding: 12px 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.03);
+}
+.wx-kv .k{
+  font-size: 15px;
+  color: var(--muted2);
+  margin-bottom: 6px;
+}
+.wx-kv .v{
+  font-size: 20px;
+  font-weight: 900;
+}
+
+/* Lunar compact (smaller Yi/Ji) */
+/* ===== Lunar: two-column layout (Yi / Ji) ===== */
+
+.lunar-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;   /* two columns */
+  gap: 14px;
+  flex: 1;
+  min-height: 0;
+}
+
+.lunar-col{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 0;
+}
+
+.lunar-head{
+  display: flex;
+  align-items: center;
+}
+
+.items-compact{
+  font-size: 20px;   /* keep compact size */
+  color: rgba(255,255,255,0.86);
+  padding-left: 18px;
+  line-height: 1.35;
+}
+
+.items-compact li{
+  margin: 3px 0;
+}
+
+.badge{
+  display: inline-flex;        /* key */
+  align-items: center;
+  justify-content: center;
+
+  width: auto;                 /* key: no fixed width */
+  padding: 6px 10px;           /* key: left/right padding */
+
+  border-radius: 999px;        /* pill */
+  text-align: center;
+  font-weight: 950;
+  font-size: 18px;
+  line-height: 1;
+  white-space: nowrap;         /* prevent wrap */
+
+  border: 1px solid var(--line);
+  flex: 0 0 auto;
+}
+
+.badge-yi{ background: var(--yi); }
+.badge-ji{ background: var(--ji); }
+
+.items{
+  margin: 0;
+  padding-left: 18px;
+  line-height: 1.35;
+}
+.items-compact{
+  font-size: 20px;   /* smaller list */
+  color: rgba(255,255,255,0.86);
+}
+.items li{ margin: 3px 0; }
+
+.hint{
+  margin-top: auto;
+  padding-top: 12px;
+  font-size: 14px;
+  color: var(--muted2);
+  border-top: 1px solid var(--line);
+}
+
+/* Footer */
+.footer{
+  display:flex;
+  gap: 10px;
+  align-items:center;
+  justify-content:center;
+  font-size: 16px;
+  color: var(--muted2);
+  padding: 4px 0;
+}
+.sep{ opacity: 0.6; }
+
+/* Responsive tune */
+@media (max-width: 900px){
+  .layout-a{ grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
+
+  .mmdd {
+    font-size: 48px;   /* 月 */
+    line-height: 1.1;
+  }
+  .dow {
+    font-size: 36px;   /* 星期 */
+    line-height: 1.1;
+  }
+}

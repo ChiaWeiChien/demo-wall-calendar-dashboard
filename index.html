@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Wall Calendar Dashboard</title>
+    <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+    <main class="screen" aria-label="Wall Calendar Dashboard">
+        <section class="layout-a">
+            <!-- Left: Big Date -->
+            <article class="panel panel-date" aria-label="Date and time">
+                <div class="date-md" id="dateBig">2026-01-05</div>
+
+                <div class="date-huge">
+                    <div class="mmdd" id="mmdd">01</div>
+                    <!-- <div class="dateBig" id="dateBig"></div>  -->
+                    <div class="dow" id="dow">Mon</div>
+                    <div class="yyyy" id="yyyy">2026</div>
+                </div>
+
+                <div class="date-meta">
+                    <div class="meta-row" id="dateSub">農曆：十二月十六 · 節氣：小寒</div>
+
+                    <div class="meta-row">
+                        <span class="meta-label" data-i18n="label.now">現在：</span><span id="timeBig">13:20</span>
+                    </div>
+
+                    <div class="meta-row muted">
+                        <span class="meta-label" data-i18n="label.updated">更新：</span><span id="updatedAt">13:10</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Right: Weather + Lunar -->
+            <section class="right-stack" aria-label="Info cards">
+                <!-- Weather -->
+                <article class="panel panel-weather" aria-label="Weather">
+                    <h2 class="panel-title" data-i18n="panel.weather.title">今日天氣</h2>
+
+                    <div class="weather">
+                        <div class="wx-main">
+                            <div class="wx-icon" id="wxIcon" aria-hidden="true">⛅</div>
+                            <div class="wx-desc">
+                                <div class="wx-text" id="wxText">多雲</div>
+                                <div class="wx-temp">
+                                    <span class="wx-now" id="wxNow">18°C</span>
+                                    <span class="wx-feels" id="wxFeels">體感 17°C</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="wx-grid">
+                            <div class="wx-kv">
+                                <div class="k" data-i18n="weather.today">今日</div>
+                                <div class="v" id="wxRange">16°C ~ 22°C</div>
+                            </div>
+
+                            <div class="wx-kv">
+                                <div class="k" data-i18n="weather.rain">降雨</div>
+                                <div class="v" id="wxRain">30%</div>
+                            </div>
+
+                            <div class="wx-kv">
+                                <div class="k" data-i18n="weather.humidity">濕度</div>
+                                <div class="v" id="wxHum">65%</div>
+                            </div>
+                        </div>
+
+                        <div class="hint" id="weatherHint" data-i18n="hint.weather">
+                            地點：待設定（下一步接天氣 API）
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Lunar -->
+                <article class="panel panel-lunar" aria-label="Lunar almanac">
+                    <h2 class="panel-title" data-i18n="panel.lunar.title">農民曆</h2>
+
+                    <div class="lunar-grid">
+                        <!-- Yi -->
+                        <div class="lunar-col">
+                            <div class="lunar-head">
+                                <div class="badge badge-yi" data-i18n="lunar.yi">宜</div>
+                            </div>
+                            <ul class="items items-compact" id="lunarYi">
+                                <li>祭祀</li>
+                                <li>祈福</li>
+                                <li>出行</li>
+                            </ul>
+                        </div>
+
+                        <!-- Ji -->
+                        <div class="lunar-col">
+                            <div class="lunar-head">
+                                <div class="badge badge-ji" data-i18n="lunar.ji">忌</div>
+                            </div>
+                            <ul class="items items-compact" id="lunarJi">
+                                <li>動土</li>
+                                <li>安葬</li>
+                                <li>入宅</li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <div class="hint" id="lunarHint" data-i18n="hint.lunar">
+                        資料來源：待接農民曆 API
+                    </div>
+                </article>
+            </section>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <!-- This is dynamic; keep as-is (we will localize it via JS later if needed). -->
+            <span id="locationText">地點：新北市（待設定）</span>
+            <span class="sep">|</span>
+            <span id="netText">Wi-Fi：OK</span>
+            <span class="sep">|</span>
+            <span id="versionText">v0.1</span>
+        </footer>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+</body>
+
+</html>
