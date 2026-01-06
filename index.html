@@ -17,7 +17,6 @@
 
                 <div class="date-huge">
                     <div class="mmdd" id="mmdd">01</div>
-                    <!-- <div class="dateBig" id="dateBig"></div>  -->
                     <div class="dow" id="dow">Mon</div>
                     <div class="yyyy" id="yyyy">2026</div>
                 </div>
@@ -70,9 +69,34 @@
                             </div>
                         </div>
 
-                        <div class="hint" id="weatherHint" data-i18n="hint.weather">
-                            地點：待設定（下一步接天氣 API）
+                        <!-- Future temperature trend (spark line) -->
+                        <div class="wx-trend" aria-label="Next hours temperature trend">
+                            <div class="wx-trend-title" id="wxTrendTitle">未來 6 小時溫度</div>
+
+                            <div class="wx-trend-wrap">
+                                <svg class="wx-trend-svg" id="wxTrendSvg" viewBox="0 0 520 46" preserveAspectRatio="none" aria-hidden="true">
+                                <!-- baseline -->
+                                <line class="wx-trend-base" x1="10" y1="30" x2="510" y2="30"></line>
+
+                                <!-- polyline -->
+                                <polyline class="wx-trend-line" id="wxTrendLine" points=""></polyline>
+
+                                <!-- dots group (JS will fill) -->
+                                <g id="wxTrendDots"></g>
+                                </svg>
+
+                                <!-- endpoint labels (C: only start/end) -->
+                                <div class="wx-trend-label wx-trend-left" id="wxTrendLeft">--°</div>
+                                <div class="wx-trend-label wx-trend-right" id="wxTrendRight">--°</div>
+                            </div>
                         </div>
+                        
+                        <!-- Weather footer (location + updated time) -->
+                        <div class="wx-footer" aria-label="Weather footer">
+                            <div class="wx-footer-left" id="weatherHint">地點：—</div>
+                            <div class="wx-footer-right" id="wxUpdatedText">更新：--:--</div>
+                        </div>
+
                     </div>
                 </article>
 
@@ -125,7 +149,7 @@
         </footer>
     </main>
 
-    <script type="module" src="./app.js"></script>
+    <script type="module" src="./js/app.js"></script>
 </body>
 
 </html>

@@ -475,6 +475,19 @@
       "zhHans": "",
       "en": "Build Stove",
       "aliases": []
+    },
+
+
+    {
+      "category": "其他類",
+      "key": "無",
+      "zhHant": "無",
+      "descZhHant": "無特別宜忌事項",
+      "zhHans": "",
+      "en": "No Special Events",
+      "aliases": [
+        "无"
+      ]
     }
   ]
 }
