@@ -6,7 +6,7 @@
  */
 
 // App version
-export const APP_VERSION = "0.1.1";
+export const APP_VERSION = "0.1.2";
 
 // Timezone
 export const TZ = "Asia/Taipei";
@@ -15,6 +15,7 @@ export const TZ = "Asia/Taipei";
 export const DEBUG = true;
 
 // Weather refresh interval (milliseconds)
+// export const WEATHER_UPDATE_RATE = 3 * 1000; // 30 seconds for test
 export const WEATHER_UPDATE_RATE = 2 * 60 * 60 * 1000; // 2 hours
 
 // Clock update interval (milliseconds)

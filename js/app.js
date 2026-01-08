@@ -5,18 +5,23 @@
  * License: MIT
  */
 
-import { DEBUG, CLOCK_TICK_RATE } from "./config.js";
+import { CLOCK_TICK_RATE } from "./config.js";
 import { getInitialLang, setLang } from "./i18n.js";
 import { loadCache, getTaipeiYYYYMMDD, makeWeatherCacheKey } from "./cache.js";
 import { setupNetworkStatus, updateNetworkText, refreshDateTexts, setUpdatedAtNow, updateVersionText, formatTimeHHMM, applyYiJiClampForPortrait } from "./ui.js";
 import { syncResolvedLocFromUrlOrDefault, updateLocationTexts, getResolvedLoc } from "./location.js";
-import { refreshWeather, renderWeatherFromForecast } from "./weather.js";
+import { refreshWeather, renderWeatherFromForecast, renderHourlyTrend, renderWeatherUpdatedTime } from "./weather.js";
 import { refreshLunarDaily, getLunarCacheKey, renderLunarFromRaw } from "./lunar.js";
+import { createLogger } from "./logger.js";
 
-function log(...args) { if (DEBUG) console.log("[WCD]", ...args); }
+// Logger
+const log = createLogger("WCD:app");
 
 // Prevent overlapping refresh calls
 let _refreshInFlight = false;
+
+// Last location for weather-only refreshes
+let _lastLocForWeatherOnly = null;
 
 // Day rollover guard
 let _lastTaipeiDateKey = null;
@@ -49,14 +54,16 @@ async function checkDayRolloverAndRefresh(reason = "unknown") {
   try {
     await refreshLunarOnly();
   } catch (e) {
-    console.warn("[WCD] Day rollover refresh failed", e);
+    log.warn("Day rollover refresh failed", e);
   }
 }
 
 function setupForegroundRolloverChecks() {
   const onResume = () => {
+    log.info("resume", { at: new Date().toISOString(), vis: document.visibilityState });
     _lastRolloverCheckMs = 0;
     checkDayRolloverAndRefresh("resume");
+    refreshWeatherOnly();
   };
 
   document.addEventListener("visibilitychange", () => {
@@ -149,9 +156,26 @@ async function refreshWeatherOnly() {
   }
   _refreshInFlight = true;
   try {
-    syncLocationAndRenderFromCache();
+
+    // read from cache + sync location
+    // syncLocationAndRenderFromCache();
+
+    // Sync location (but do NOT render cache every time to avoid flicker)
+    const prevLoc = _lastLocForWeatherOnly;
+    const locNow = syncResolvedLocFromUrlOrDefault(); // returns resolvedLoc
+
+    // Update texts (location string), regardless of geocode success
+    updateLocationTexts({ geocodeOk: true });
+
+    // If location changed, allow one fast cache render to avoid empty UI
+    if (prevLoc !== locNow) {
+      _lastLocForWeatherOnly = locNow;
+      renderFromCaches(); // uses the current resolvedLoc
+    }
+
     await refreshWeather();
     setUpdatedAtNow(new Date());
+
   } finally {
     _refreshInFlight = false;
   }
@@ -188,10 +212,10 @@ function scheduleAlignedEvery2Hours(fn) {
   log("Aligned schedule armed", { now: now.toISOString(), next: next.toISOString(), delayMs: delay });
 
   setTimeout(async () => {
-    try { await fn(); } catch (e) { console.warn("[WCD] aligned tick failed:", e); }
+    try { await fn(); } catch (e) { log.warn("aligned tick failed:", e); }
 
     setInterval(() => {
-      Promise.resolve(fn()).catch((e) => console.warn("[WCD] aligned interval failed:", e));
+      Promise.resolve(fn()).catch((e) => log.warn("aligned interval failed:", e));
     }, 2 * 60 * 60 * 1000);
   }, delay);
 }
@@ -235,7 +259,7 @@ function setupHiddenCacheReset() {
     timer = setTimeout(resetCounter, TAP_WINDOW_MS);
 
     // Optional: show a tiny hint on long press / multi-tap
-    // console.log(`[Reset] taps=${taps}`);
+    // log(`[Reset] taps=${taps}`);
 
     if (taps < TAP_TARGET) return;
 
@@ -278,7 +302,7 @@ async function hardClearAllCaches() {
     // 4) Try to clear SW-controlled fetches immediately (best effort)
     // Note: Some browsers may still keep a memory cache; reload with a query param helps.
   } catch (e) {
-    console.warn("hardClearAllCaches failed:", e);
+    log.warn("hardClearAllCaches failed:", e);
   }
 }
 

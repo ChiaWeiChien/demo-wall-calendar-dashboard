@@ -6,8 +6,11 @@
  */
 
 import { $ } from "./dom.js";
-import { TZ, DEBUG, APP_VERSION } from "./config.js";
+import { TZ, APP_VERSION } from "./config.js";
 import { getCurrentLang, t } from "./i18n.js";
+import { createLogger } from "./logger.js";
+
+const log = createLogger("WCD:ui");
 
 export function pad2(n) { return String(n).padStart(2, "0"); }
 
@@ -110,6 +113,19 @@ export function clampListToLines(ul, { maxLines = 2, moreClass = "item-more" } =
   const hiddenCount = items.length - keepCount;
   if (hiddenCount <= 0) return;
 
+  /* Reserve space for "+N" by hiding ONE MORE item */
+  const reserve = 1;
+  const visibleCount = Math.max(0, keepCount - reserve);
+
+  for (let i = visibleCount; i < items.length; i++) {
+    items[i].style.display = "none";
+  }
+
+  const more = document.createElement("li");
+  more.className = moreClass;
+  more.textContent = `+${items.length - visibleCount}`;
+
+  /*
   for (let i = keepCount; i < items.length; i++) {
     items[i].style.display = "none";
   }
@@ -117,17 +133,24 @@ export function clampListToLines(ul, { maxLines = 2, moreClass = "item-more" } =
   const more = document.createElement("li");
   more.className = moreClass;
   more.textContent = `+${hiddenCount}`;
+  */
+
   ul.appendChild(more);
 }
 
 export function applyYiJiClampForPortrait() {
-  const isPortraitNarrow = window.matchMedia("(max-width: 900px)").matches;
-  if (!isPortraitNarrow) return;
+  // const isPortraitNarrow = window.matchMedia("(max-width: 900px)").matches;
+  // if (!isPortraitNarrow) return;
+  // const cssLines = getComputedStyle(document.body)
+  //   .getPropertyValue("--lunar-max-lines")
+  //   .trim();
+  // const maxLines = Number(cssLines) || 2;
 
+  // fix one line
   const yiUl = $("lunarYi");
   const jiUl = $("lunarJi");
-  clampListToLines(yiUl, { maxLines: 2 });
-  clampListToLines(jiUl, { maxLines: 2 });
+  clampListToLines(yiUl, { maxLines: 1 });   // maxLines: 2
+  clampListToLines(jiUl, { maxLines: 1 });   // maxLines: 2
 
-  if (DEBUG) console.log("[WCD] YiJi clamp applied (portrait)");
+  log.debug("YiJi clamp applied (portrait)");
 }

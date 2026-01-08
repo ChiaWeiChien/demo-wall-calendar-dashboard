@@ -6,15 +6,38 @@
  */
 
 import { $, } from "./dom.js";
-import { DEBUG, TZ, GEO_CACHE_PREFIX, GEO_CACHE_TTL_MS } from "./config.js";
+import { TZ, GEO_CACHE_PREFIX, GEO_CACHE_TTL_MS } from "./config.js";
 import { getCurrentLang, t } from "./i18n.js";
 import { loadCache, saveCache, makeWeatherCacheKey, shouldRefreshWeather } from "./cache.js";
 import { getResolvedLoc, updateLocationTexts } from "./location.js";
 import { formatTimeHHMM } from "./ui.js";
 import { ensureTwLocationsLoaded, lookupTwLocation } from "./twLocationLookup.js";
+import { createLogger } from "./logger.js";
+
+// Logger
+const log = createLogger("WCD:weather");
 
 
-function log(...args) { if (DEBUG) console.log("[WCD]", ...args); }
+/**
+ * Fetch JSON with timeout
+ * @param {string} url URL to fetch
+ * @param {object} options Options object
+ * @param {number} options.timeoutMs Timeout in milliseconds (default 12000ms)
+ * @returns {Promise<object>} Parsed JSON object
+ */
+async function fetchJsonWithTimeout(url, { timeoutMs = 12000 } = {}) {
+  const ctrl = new AbortController();
+  const tmr = setTimeout(() => ctrl.abort(), timeoutMs);
+  try {
+    const res = await fetch(url, { cache: "no-store", signal: ctrl.signal });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  } finally {
+    clearTimeout(tmr);
+  }
+}
+
+
 
 // Geocoding cache key
 function makeGeoCacheKey(loc) {
@@ -109,9 +132,7 @@ async function geocodeLocation(loc) {
     url.searchParams.set("language", getCurrentLang() === "en" ? "en" : "zh");
     if (withCountryCode) url.searchParams.set("countryCode", "TW");
 
-    const res = await fetch(url.toString(), { cache: "no-store" });
-    if (!res.ok) throw new Error(`Geocoding HTTP ${res.status}`);
-    return await res.json();
+    return await fetchJsonWithTimeout(url.toString(), { timeoutMs: 12000 });
   };
 
   for (const withCountryCode of [true, false]) {
@@ -166,9 +187,7 @@ async function fetchTodayWeatherByLatLon(latitude, longitude) {
 
   url.searchParams.set("hourly", "temperature_2m");
 
-  const res = await fetch(url.toString(), { cache: "no-store" });
-  if (!res.ok) throw new Error(`Forecast HTTP ${res.status}`);
-  return await res.json();
+  return await fetchJsonWithTimeout(url.toString(), { timeoutMs: 12000 });
 }
 
 function round0(x) {
@@ -267,7 +286,7 @@ export function renderWeatherFromForecast(wx) {
   renderTempSparkline(wx);
 }
 
-function renderWeatherUpdatedTime(dateObj = new Date()) {
+export function renderWeatherUpdatedTime(dateObj = new Date()) {
     const el = $("wxUpdatedText");
     if (!el) return;
     el.textContent = `${t("label.updated")}${formatTimeHHMM(dateObj)}`;
@@ -275,7 +294,7 @@ function renderWeatherUpdatedTime(dateObj = new Date()) {
 
 
 function setWeatherUpdatedAt(tsMs) {
-  const el = document.getElementById("weatherUpdatedAt");
+  const el = document.getElementById("wxUpdatedText");
   if (!el) return;
 
   if (!tsMs) { el.textContent = ""; return; }
@@ -345,7 +364,12 @@ function renderTempSparkline(wx) {
     `;
 }
 
-function renderHourlyTrend(wx, hours = 6) {
+/**
+ * Render hourly temperature trend for next N hours
+ * @param {object} wx Weather forecast object
+ * @param {number} hours Number of hours to show (default 6)
+ */
+export function renderHourlyTrend(wx, hours = 6) {
     const svg = $("wxTrendSvg");
     const line = $("wxTrendLine");
     const dots = $("wxTrendDots");
@@ -461,19 +485,22 @@ function renderHourlyTrend(wx, hours = 6) {
  * Cache key is `${lang}:${loc}`.
  */
 export async function refreshWeather() {
-  setWeatherLoadingState();
-
+  
   const loc = getResolvedLoc();
   const wxCacheKey = makeWeatherCacheKey(getCurrentLang(), loc);
   const cached = loadCache(wxCacheKey);
 
-  if (!shouldRefreshWeather(cached)) {
-    log("Weather cache hit", { key: wxCacheKey, ageMs: Date.now() - cached.ts });
+  if (cached && !shouldRefreshWeather(cached)) {
+    const ts = Number(cached.ts);
+    const ageMin = Number.isFinite(ts) ? ((Date.now() - ts) / 60000).toFixed(1) : "NaN";
+    log("Weather cache hit", { key: wxCacheKey, ageMin, ts });
     updateLocationTexts({ geocodeOk: true });
     renderWeatherFromForecast(cached.wx);
     setWeatherUpdatedAt(cached.ts);
     return;
   }
+
+  setWeatherLoadingState();
 
   log("Weather refresh start", {
     lang: getCurrentLang(),
@@ -496,8 +523,9 @@ export async function refreshWeather() {
     renderHourlyTrend(wx, 6);
     renderWeatherUpdatedTime(new Date());
 
+    const tsNow = Date.now();
     saveCache(wxCacheKey, {
-      ts: Date.now(),
+      ts: tsNow,
       wx,
       meta: {
         loc,
@@ -505,14 +533,15 @@ export async function refreshWeather() {
         geo: { latitude: geo.latitude, longitude: geo.longitude },
       },
     });
-
-    setWeatherUpdatedAt(Date.now());
+    setWeatherUpdatedAt(tsNow);
 
   } catch (err) {
     updateLocationTexts({ geocodeOk: false });
     setWeatherNAState();
 
-    console.warn("[Weather] refresh failed:", {
+    const isAbort = err?.name === "AbortError";
+    log.warn("refresh failed:", {
+      type: isAbort ? "timeout" : "error",
       message: err?.message,
       stack: err?.stack,
       err

@@ -49,8 +49,17 @@ export function makeWeatherCacheKey(lang, loc) {
 
 export function shouldRefreshWeather(cacheObj) {
   if (!cacheObj || typeof cacheObj !== "object") return true;
-  if (!cacheObj.ts || !cacheObj.wx) return true;
-  return (Date.now() - cacheObj.ts) >= WEATHER_UPDATE_RATE;
+  if (cacheObj.wx == null) return true;
+
+  const ts = Number(cacheObj.ts);
+  if (!Number.isFinite(ts) || ts <= 0) return true;
+
+  const age = Date.now() - ts;
+
+  // If clock jumps backwards or ts is in the future, force refresh to recover
+  if (!Number.isFinite(age) || age < 0) return true;
+
+  return age >= WEATHER_UPDATE_RATE;
 }
 
 export function shouldRefreshLunarDaily(cacheObj) {

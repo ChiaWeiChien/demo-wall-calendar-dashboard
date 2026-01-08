@@ -21,7 +21,22 @@ export function getResolvedLoc() {
 }
 
 export function setResolvedLoc(loc) {
-  resolvedLoc = loc;
+  resolvedLoc = normalizeLoc(loc);
+}
+
+function normalizeLoc(loc) {
+  let s = String(loc || "").trim();
+
+  // collapse whitespace (including full-width spaces)
+  s = s.replace(/[\s\u3000]+/g, " ");
+
+  // common zh variants (optional but helpful)
+  s = s.replace(/^臺北/, "台北");
+
+  // unify commas spacing for en
+  s = s.replace(/\s*,\s*/g, ", ");
+
+  return s;
 }
 
 export function getLocFromUrl() {
@@ -29,8 +44,8 @@ export function getLocFromUrl() {
   const loc = url.searchParams.get("loc");
   if (!loc) return null;
 
-  const trimmed = loc.trim();
-  return trimmed.length > 0 ? trimmed : null;
+  const norm = normalizeLoc(loc);
+  return norm.length > 0 ? norm : null;
 }
 
 export function resolveLocationFromUrlOrDefault() {
@@ -41,7 +56,7 @@ export function resolveLocationFromUrlOrDefault() {
 }
 
 export function syncResolvedLocFromUrlOrDefault() {
-  resolvedLoc = resolveLocationFromUrlOrDefault();
+  resolvedLoc = normalizeLoc(resolveLocationFromUrlOrDefault());
   return resolvedLoc;
 }
 

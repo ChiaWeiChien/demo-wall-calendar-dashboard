@@ -1,0 +1,48 @@
+/* ============================================================
+   00-base.css
+   - Theme tokens, reset, typography, viewport sizing
+   ============================================================ */
+
+/* ---------- Theme tokens ---------- */
+:root{
+  --bg: #0b0f14;
+  --card: rgba(255,255,255,0.06);
+  --card2: rgba(255,255,255,0.08);
+  --text: rgba(255,255,255,0.92);
+  --muted: rgba(255,255,255,0.65);
+  --muted2: rgba(255,255,255,0.48);
+  --line: rgba(255,255,255,0.12);
+
+  --yi: rgba(60, 210, 140, 0.20);
+  --ji: rgba(255, 120, 120, 0.20);
+
+  --chip: rgba(255,255,255,0.06);
+}
+
+/* ---------- Global reset ---------- */
+*{ box-sizing: border-box; }
+html,body{ height:100%; margin:0; }
+
+/* iOS Safari text autosizing guard */
+html{
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* ---------- Page background / typography ---------- */
+body{
+  background:
+    radial-gradient(1200px 800px at 20% 10%, rgba(255,255,255,0.10), transparent 60%),
+    radial-gradient(1000px 700px at 90% 30%, rgba(80,170,255,0.10), transparent 55%),
+    var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+               "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+
+  overflow: hidden; /* dashboard: no page scroll */
+}
+
+/* ---------- App root sizing (prefer visual viewport units) ---------- */
+.screen{ height: 100vh; } /* fallback */
+@supports (height: 100dvh){ .screen{ height: 100dvh; } }
+@supports (height: 100svh){ .screen{ height: 100svh; } }

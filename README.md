@@ -1,23 +1,32 @@
 # Wall Calendar & Weather Dashboard（iPad 壁掛日曆）
 
-一個為 **舊款 iPad（Safari）** 設計的輕量化「壁掛日曆＋天氣顯示」網頁應用。  
-專注於 **長時間穩定顯示（24/7）**、**台灣在地化**，並刻意避開 Safari 常見的快取與定位問題。
+👉 English version: [README.en.md](README.en.md)
+
+
+一個專為 **舊款 iPad（Safari）** 設計的輕量化壁掛式日曆與天氣顯示網頁應用，  
+專注於 **24 小時全天候長時間穩定顯示**，  
+並實際解決 iOS Safari 在快取、定位與畫面更新上的不穩定行為。
+
+本專案為 **純靜態前端**，無後端、無建置流程，適合直接部署或以書籤方式使用。
+
+可透過 GitHub Pages 直接部署並作為壁掛顯示使用。
 
 ---
 
-## 功能特色（Features）
+## ✨ 功能特色（Features）
 
 ### 📅 日曆（Calendar）
-- 每日行事曆顯示
-- 農曆支援
-- 宜忌（YiJi / 宜忌）資料（來自本地 JSON）
-- 繁體中文 / 英文介面
+- 公曆日期顯示
+- 農曆日期與節氣
+- 宜 / 忌（YiJi）顯示（本地 JSON）
+- 繁體中文 / 英文介面切換
 
 ### 🌤 天氣（Weather）
-- 即時天氣與溫度
-- 未來 6 小時溫度趨勢
+- 即時天氣狀態
+- 今日溫度範圍
+- 體感溫度、濕度、降雨機率
+- 未來數小時溫度趨勢（Sparkline）
 - 天氣資料來源：Open-Meteo
-- **直接使用經緯度（lat / lon）**，不依賴模糊地名查詢
 
 ### 📍 台灣地區定位（Local-first）
 - 使用本地對照表 `data/tw_locations.json`
@@ -25,223 +34,293 @@
   - `台北市信義區`
   - `信義區`
   - `Xinyi District, Taipei`
-- 中英文皆可本地查表，不依賴遠端 geocoding
-- 避免台灣地名在國際 API 上查詢不穩定的問題
+- 中英文皆可直接本地查表
+- 僅在必要時才使用遠端地理查詢 API
 
 ### 📴 穩定性與快取設計
-- 使用 localStorage 快取：
-  - 使用者位置
-  - 地名查詢結果
+- 使用 `localStorage` 快取：
+  - 使用者地點
+  - 地名解析結果
   - 天氣資料
-- 網路不穩定時仍可正常顯示
-- 設計目標：**長時間無人值守顯示**
+- 網路暫時中斷仍可顯示最近資料
+- 適合長時間無人值守顯示（壁掛情境）
 
 ---
 
-## 使用方式（How to Use）
+## 🚀 使用方式（How to Use）
 
-本專案為 **純靜態網頁應用**，無後端、無建置流程。  
-只要使用瀏覽器開啟 `index.html`，或部署至任意靜態網站即可使用。
+本專案為 **純靜態網頁應用**，無需後端或建置工具。
 
-特別適合：
-- 舊款 iPad 壁掛顯示
-- 書籤（Bookmark）快速設定
-- 遠端維護與除錯
+### 基本使用
 
----
+直接以瀏覽器開啟：
 
-### 基本使用方式
-
-直接開啟：
 ```
 index.html
 ```
 
 系統將會：
-1. 載入 `config.js` 中定義的預設位置
+1. 套用預設語言與地點
 2. 使用經緯度取得天氣資料
-3. 將結果快取於瀏覽器中以提高穩定性
+3. 將資料快取於瀏覽器中
 
 ---
 
-### URL 參數設定
+## 🔗 URL 參數設定（Query Parameters）
 
-本系統支援 **URL Query Parameters**，可在不操作裝置的情況下完成設定。
+可透過 URL 參數在不操作裝置的情況下完成設定，  
+非常適合壁掛 iPad、遠端維護或書籤使用。
 
-這在壁掛 iPad、遠端維護或除錯時特別實用。
+### `lang` – 介面語言
 
----
-
-#### `lang` – 介面語言
-
-設定顯示語言：
 ```
 ?lang=zh
 ?lang=en
 ```
 
-範例：
-```
-index.html?lang=zh 
-index.html?lang=en
-```
-
----
-
-#### `loc` – 地點設定（台灣最佳化）
-
-以地名設定顯示位置。
+### `loc` – 地點設定（台灣最佳化）
 
 支援格式：
-- 中文完整名稱：`台北市信義區`
-- 僅行政區：`信義區`
-- 英文：`Xinyi District, Taipei`
+- `台北市信義區`
+- `信義區`
+- `Xinyi District, Taipei`
+
+```
+?loc=台北市信義區
+?loc=Xinyi%20District,%20Taipei
+```
+
+### 組合使用
+
+```
+?lang=en&loc=Xinyi%20District,%20Taipei
+```
+
+---
+
+## 🌐 線上展示 / GitHub Pages 部署方式
+
+本專案可直接部署為 **純靜態網站**，  
+建議使用 **GitHub Pages** 作為壁掛顯示的實際執行環境。
+
+此方式 **無需建置流程、無需後端伺服器**，  
+非常適合舊款 iPad 長時間、全天候顯示使用。
+
+---
+
+### 啟用 GitHub Pages
+
+1. 將此專案推送至 GitHub
+2. 前往 **Repository → Settings → Pages**
+3. 在 **Source** 設定中：
+   - 選擇 `Deploy from a branch`
+   - Branch：`main`
+   - Folder：`/ (root)`
+4. 儲存設定
+
+稍後 GitHub 將提供一個公開網址，例如：
+
+```text
+https://<username>.github.io/<repository-name>/
+```
+
+---
+
+### 在 iPad 上使用（建議方式）
+
+於 iPad（Safari）中：
+
+1. 開啟 GitHub Pages 提供的網址
+2. 視需要透過 URL 參數設定語言與地點
+3. （選用）加入「主畫面」
+4. 建議系統設定：
+   - 自動鎖定：**永不**
+   - （選用）開啟「引導使用模式（Guided Access）」
+
+此設定特別適合 **壁掛顯示、長時間無人值守** 的使用情境。
+
+---
+
+### 搭配 URL 參數使用
+
+GitHub Pages 部署後，  
+可直接透過修改 URL 來遠端調整顯示內容。
 
 範例：
+
 ```
-index.html?loc=台北市信義區
-index.html?loc=信義區
-index.html?loc=Xinyi%20District,%20Taipei
+https://<username>.github.io/<repo>/?lang=zh&loc=台北市信義區
+https://<username>.github.io/<repo>/?lang=en&loc=Xinyi%20District,%20Taipei
 ```
 
-> 系統會優先使用本地對照表 `data/tw_locations.json`  
-> 僅在查不到時才使用遠端地理查詢服務。
+此方式可用於：
+- 不接觸裝置即可變更顯示設定
+- 替換壁掛顯示地點
+- 將最終設定結果儲存為書籤
 
 ---
 
-#### 組合參數使用
+### GitHub Pages 的快取行為說明
 
-可同時設定多個參數：
-```
-index.html?lang=en&loc=Xinyi%20District,%20Taipei
-```
-
-非常適合儲存為書籤或遠端設定壁掛裝置。
-
----
-
-### 快取行為說明
-
-- 地點、地名解析結果、天氣資料皆會儲存在 `localStorage`
-- 重新整理頁面時會優先使用快取資料
-- 可降低網路不穩定時的影響，提升長時間顯示穩定性
-
+- GitHub Pages 僅提供靜態檔案
+- 所有應用資料（天氣、地點、地名解析）皆由瀏覽器端快取
+- 若舊版 iPad Safari 出現異常快取行為：
+  - 可使用系統內建的 **隱藏快取清除手勢**
+  - （頁面底部狀態列連續點擊 7 次）
 
 ---
 
+### 自訂網域（選用）
 
-## 隱藏維護功能（Hidden Maintenance Feature）
+若使用自訂網域：
 
-由於舊版 iPad Safari 快取行為不可靠，系統內建一個「隱藏清除快取」機制。
+- 必須啟用 HTTPS（GitHub Pages 可自動提供）
+- 無需額外設定
+- Safari 行為與 `github.io` 網域完全相同
 
-### 🔧 隱藏快取清除方式
-1. 連續點擊頁面底部狀態列 **7 次（約 1 秒內）**
-2. 確認清除
-3. 系統將：
+---
+
+> 💡 提示  
+> 相較於直接以 `file://` 開啟檔案，  
+> **GitHub Pages 能提供更穩定、可預期的 Safari 行為**，  
+> 建議作為實際部署與長時間顯示的方式。
+
+
+---
+
+## 🔌 外部 API 使用說明（External APIs）
+
+本專案所有外部資料皆由瀏覽器直接透過 HTTPS 取得，  
+**不經過任何後端伺服器**。
+
+### 🌤 天氣資料（Open-Meteo）
+
+API Endpoint：
+
+```text
+https://api.open-meteo.com/v1/forecast
+```
+
+- 使用經緯度查詢
+- 明確指定 `timezone=Asia/Taipei`
+- 快取更新頻率：每 2 小時
+
+### 🗺 地理位置查詢（Fallback）
+
+API Endpoint：
+
+```text
+https://geocoding-api.open-meteo.com/v1/search
+```
+
+- 僅在本地查表失敗時使用
+- 查詢結果快取 7 天
+- 限定 `countryCode=TW`
+
+---
+
+## 🧠 設計理念（Design Philosophy）
+
+本專案刻意避免：
+
+- Browser Geolocation API
+- 複雜前端框架
+- 不可預期的模糊地名查詢
+- 需要 API Key 的第三方服務
+
+而選擇：
+
+- 本地資料（Local-first）
+- 可預期、可除錯的行為
+- 適合長時間顯示的 UI 與快取策略
+- 對舊款 iPad Safari 友善的實作方式
+
+---
+
+## 🧰 隱藏維護功能（Hidden Maintenance）
+
+由於舊版 iPad Safari 的快取行為不穩定，  
+系統內建一個隱藏的快取清除機制。
+
+### 快取清除方式
+1. 連續點擊頁面底部狀態列 **7 次**
+2. 確認後系統將：
    - 清除 localStorage / sessionStorage
    - 清除 Cache Storage
    - 取消註冊 Service Worker（若存在）
-   - 強制重新整理頁面（附帶 cache-busting 參數）
-
-狀態列顯示範例：
-```
-Location: Xinyi District, Taipei | Wi-Fi: OK | v0.1.1
-```
+   - 重新載入頁面（附加 cache-busting 參數）
 
 ---
 
-## iPad Safari 相容性說明
+## 📁 專案結構（Project Structure）
 
-- 僅在 **底部狀態列** 停用 double-tap 縮放
-- 其他區域仍保留正常縮放行為
-- 使用技術：
-  - `touch-action: manipulation`
-  - `dblclick.preventDefault()`
-
-避免誤觸縮放，同時保留隱藏多點擊操作。
-
----
-
-## 專案結構（Project Structure）
+本專案採用 **模組化前端結構**，並將 CSS 拆分為多個層級檔案，以提升可維護性與跨裝置穩定性。
 
 ```
 .
 ├─ index.html
-├─ style.css
 ├─ README.md
+├─ README.en.md
 ├─ LICENSE
+├─ .gitattributes
+├─ .gitignore
+│
 ├─ data/
-│  ├─ tw_locations.json     # 台灣縣市 / 行政區經緯度對照表
-│  └─ yiji.json             # 宜忌資料
-└─ js/
-   ├─ app.js                # 應用程式進入點
-   ├─ cache.js              # 快取與 localStorage 工具
-   ├─ config.js             # 設定與版本資訊
-   ├─ dom.js                # DOM 操作工具
-   ├─ i18n.js               # 中英文切換
-   ├─ location.js           # 位置狀態管理
-   ├─ lunar.js              # 農曆計算
-   ├─ twLocationLookup.js   # 台灣地名本地查表
-   ├─ ui.js                 # UI 渲染
-   └─ weather.js            # 天氣資料處理
+│  ├─ tw_locations.json     # 台灣縣市 / 行政區經緯度對照表（Local-first）
+│  └─ yiji.json             # 宜忌（YiJi）資料
+│
+├─ js/
+│  ├─ app.js                # 應用程式進入點（排程、生命週期、模組協調）
+│  ├─ cache.js              # 快取策略與 localStorage 工具
+│  ├─ config.js             # 全域設定（版本、時區、更新頻率）
+│  ├─ dom.js                # DOM 存取輔助工具
+│  ├─ i18n.js               # 中 / 英文切換與字典
+│  ├─ location.js           # 地點解析與狀態管理
+│  ├─ logger.js             # 統一 logging 介面（debug / info / warn）
+│  ├─ lunar.js              # 農曆、節氣、宜忌資料處理
+│  ├─ twLocationLookup.js   # 台灣行政區本地查表
+│  ├─ ui.js                 # UI 更新與渲染邏輯
+│  └─ weather.js            # 天氣資料取得、快取與顯示
+│
+└─ style/
+   ├─ 00-base.css           # Reset、Theme tokens、共用基礎樣式
+   ├─ 10-layout.css         # 主要版面配置（Grid / Flex）
+   ├─ 20-responsive.css     # 裝置 / 方向（直橫式）調整
+   └─ 30-patches.css        # 瀏覽器相容性修補（舊 iPad / Safari）
 ```
 
 ---
 
-## 設定（Configuration）
+### 🎨 CSS 分層設計說明（CSS Architecture）
 
-### 預設位置（Default Location）
-`js/config.js`：
+CSS 採用 **分層（Layered）結構**，避免單一巨大樣式檔難以維護：
 
-```js
-export const DEFAULT_LOCATION = {
-  zh: "台北市信義區",
-  en: "Xinyi District, Taipei",
-};
-```
+- **00-base.css**
+  - Reset / Normalize
+  - CSS Variables（顏色、字體、間距）
+  - 全域共用樣式
 
-### 版本號（App Version）
-```js
-export const APP_VERSION = "0.1.1";
-```
+- **10-layout.css**
+  - 主要 Grid / Flex 版面
+  - Panel / Card 結構
+  - 平板橫式的預設配置
 
----
+- **20-responsive.css**
+  - 平板 / 手機
+  - 直式 / 橫式切換
+  - 高度不足時的 UI 縮減策略
 
-## 已知限制（Known Limitations）
-- 僅輸入行政區名稱（例如 `中山區`）時可能存在歧義
-  - 目前行為：取第一筆匹配結果
-  - 可擴充為候選清單 UI
-- 專案主要針對台灣地區設計
+- **30-patches.css**
+  - iOS Safari 特有行為修正
+  - flex / grid overflow 問題
+  - 視窗高度（vh / dvh / svh）差異處理
 
----
-
-## 部署建議（Deployment）
-- 純靜態網站（無後端）
-- 可使用 GitHub Pages 或本地伺服器
-- 建議使用環境：
-  - 舊款 iPad
-  - Safari
-  - 關閉自動鎖定
-  - （選用）Guided Access
+此結構特別針對 **舊款 iPad Safari** 與長時間顯示情境設計，  
+確保在不同裝置與瀏覽器下仍能穩定呈現。
 
 ---
 
-## 設計理念（Design Philosophy）
-
-本專案刻意避免：
-- Browser Geolocation API
-- 複雜前端框架
-- 不穩定的模糊地名查詢
-
-而選擇：
-- 本地資料
-- 可預期行為
-- 易除錯、易維護的結構
-- 適合長時間顯示的設計
-
----
-
-## License
+## 📜 License
 
 MIT
 
@@ -250,4 +329,4 @@ MIT
 ## Motivation
 
 > 舊 iPad 非常適合當壁掛顯示器，  
-> **前提是你不要跟 Safari 的行為對抗，而是順著它設計。**
+> 前提是 **不要對抗 Safari，而是順著它的行為設計。**

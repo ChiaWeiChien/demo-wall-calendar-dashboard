@@ -6,12 +6,14 @@
  */
 
 import { $ } from "./dom.js";
-import { DEBUG, YIJI_DICT_VERSION } from "./config.js";
+import { YIJI_DICT_VERSION } from "./config.js";
 import { getCurrentLang } from "./i18n.js";
 import { loadCache, saveCache, getTaipeiYYYYMMDD, getTaipeiYMD, shouldRefreshLunarDaily } from "./cache.js";
 import { clampList, applyYiJiClampForPortrait } from "./ui.js";
+import { createLogger } from "./logger.js";
 
-function log(...args) { if (DEBUG) console.log("[WCD]", ...args); }
+// Logger
+const log = createLogger("WCD:lunar");
 
 // Cache key for lunar daily
 const LUNAR_CACHE_KEY = "wcd_lunar_daily_v1";
@@ -102,7 +104,7 @@ export async function loadYiJiDict() {
   }
 
   yijiIndex = index;
-  console.log("[WCD] YiJi dict ready, size =", yijiIndex.size);
+  log("YiJi dict ready, size =", yijiIndex.size);
 }
 
 function translateYiJiTerm(term) {
@@ -114,7 +116,7 @@ function translateYiJiTerm(term) {
   const it = yijiIndex?.get(key);
   if (!it) {
     UNKNOWN_YIJI.add(key);
-    if (DEBUG) console.warn("[WCD] Unknown YiJi term:", key, "from:", raw);
+    log.warn("Unknown YiJi term:", key, "from:", raw);
     return key;
   }
 
@@ -195,16 +197,16 @@ async function fetchCalendarApi({ year, month, day }) {
 
   const json = await res.json();
 
-  if (DEBUG) {
-    console.log("[Lunar API] response:", {
-      query: { year, month, day },
-      code: json?.code,
-      message: json?.message,
-      yi: json?.data?.yi,
-      ji: json?.data?.ji,
-      jieqi: json?.data?.jieqi,
-    });
-  }
+  
+  log("API response:", {
+    query: { year, month, day },
+    code: json?.code,
+    message: json?.message,
+    yi: json?.data?.yi,
+    ji: json?.data?.ji,
+    jieqi: json?.data?.jieqi,
+  });
+  
   return json;
 }
 
@@ -326,7 +328,7 @@ export async function refreshLunarDaily() {
 
     renderLunarFromRaw(raw);
   } catch (err) {
-    console.warn("[Lunar] API failed:", err);
+    log.warn("API failed:", err);
     // Keep UI as-is
   }
 }

@@ -1,0 +1,210 @@
+/* ============================================================
+   20-responsive.css
+   - Narrow layout (phones + tablet portrait): width-based
+   - Trend auto-hide when height is tight
+   - Ultra-short: phone landscape -> show Date only
+   ============================================================ */
+
+/* ============================================================
+   NARROW LAYOUT (phones + tablet portrait)
+   ============================================================ */
+@media (max-width: 900px){
+
+  /* Layout: one column stack */
+  .layout-a{
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .right-stack{
+    grid-template-rows: auto auto;
+  }
+
+  /* Tighter paddings */
+  .screen{
+    padding: 18px 18px calc(14px + env(safe-area-inset-bottom));
+    gap: 14px;
+  }
+
+  .panel{ padding: 16px 16px; border-radius: 16px; }
+  .panel-title{ font-size: 16px; }
+
+  /* Date: split into 2 columns (BigDate | meta) */
+  .panel-date{
+    display:grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    grid-template-rows: auto 1fr;
+    column-gap: 12px;
+    min-height: 0;
+  }
+
+  .date-md{
+    grid-column: 1 / -1;
+    font-size: 18px;
+  }
+
+  .date-huge{
+    grid-column: 1;
+    margin-top: 0;
+    padding: 6px 0;
+  }
+
+  .mmdd{ font-size: clamp(36px, 10vw, 72px); }
+  .dow{ font-size: 34px; margin-top: 8px; }
+  .yyyy{ font-size: 22px; margin-top: 6px; }
+
+  .date-meta{
+    grid-column: 2;
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .meta-row{ font-size: 16px; }
+
+  /* Weather: compact layout with pinned footer */
+  .panel-weather .weather{
+    display:grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    grid-template-rows: minmax(0, 1fr) auto; /* content + footer */
+    column-gap: 12px;
+    row-gap: 10px;
+    min-height: 0;
+  }
+
+  .wx-main{ grid-column: 1; grid-row: 1; align-items:center; }
+
+  .wx-grid{
+    grid-column: 2; grid-row: 1;
+    margin-top: 0;
+
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    align-content: start;
+  }
+
+  .wx-grid .wx-kv:first-child{ grid-column: 1 / -1; }
+
+  .wx-kv{ padding: 10px 10px; }
+  .wx-kv .v{ font-size: 18px; }
+
+  /* Trend in right column bottom area (no overlap) */
+  /* .wx-trend{
+    grid-column: 2; grid-row: 1;
+    align-self: end;
+    margin-top: 8px;
+    padding-top: 0;
+  } */
+  .wx-trend{
+    display: none;
+  }
+
+  /* Reclaim space in narrow */
+  .wx-trend-title{ display: none; }
+  .wx-trend-wrap{ height: 34px; }
+  .wx-trend-svg{ height: 34px; }
+
+  /* Footer pinned to bottom row */
+  .wx-footer{
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin-top: 0;
+    align-self: end;
+  }
+}
+
+/* ============================================================
+    Phone portrait hint for JS (no layout here) 
+    ============================================================ */
+@media (max-width: 900px){
+  body{
+    --lunar-max-lines: 1;
+  }
+}
+
+/* ============================================================
+   TREND AUTO-HIDE (hide entire module: line + dots + labels)
+   ============================================================ */
+@media (max-width: 900px) and (max-height: 520px){
+  .wx-trend{ display: none; }
+}
+
+/* ============================================================
+   ULTRA-SHORT VIEWPORT (phone landscape)
+   - Show Date only to avoid cramped UI
+   ============================================================ */
+@media (max-width: 900px) and (max-height: 460px){
+  .right-stack{ display: none; }
+
+  .layout-a{
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+  }
+
+  .panel-date{ height: 100%; }
+}
+
+/* ============================================================
+   Phone portrait: weather ultra-compact
+   - Keep: icon/desc/now/feels + "Today range"
+   - Hide: rain/humidity + trend (prevents overlap)
+   ============================================================ */
+@media (max-width: 600px){
+
+  /* Make the weather card a simple 1-column flow */
+  .panel-weather .weather{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* Hide Today temperature range card */
+  .panel-weather .wx-grid{
+    display: none;
+  }
+
+  /* Hide Rain & Humidity cards (2nd and 3rd) */
+  .panel-weather .wx-grid .wx-kv:nth-child(2),
+  .panel-weather .wx-grid .wx-kv:nth-child(3){
+    display: none;
+  }
+
+  /* Hide trend entirely on phone portrait */
+  .panel-weather .wx-trend{
+    display: none;
+  }
+
+  /* Slightly tighten the main typography */
+  .panel-weather .wx-text{ font-size: 22px; }
+  .panel-weather .wx-now{  font-size: 34px; }
+  .panel-weather .wx-feels{ font-size: 14px; }
+
+  /* Keep footer on one line with ellipsis */
+  .panel-weather .wx-footer{
+    font-size: 12px;
+  }
+
+  /* Clear any previous grid positioning from tablet rules */
+  .panel-weather .wx-footer{
+    grid-row: auto;
+    grid-column: auto;
+    align-self: auto;
+  }
+
+  /* Pin footer to the bottom of the card */
+  .panel-weather .wx-footer{
+    margin-top: auto;     /* push to bottom */
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* Make footer text ellipsis correctly on Safari */
+  .panel-weather .wx-footer-left,
+  .panel-weather .wx-footer-right{
+    min-width: 0;
+  }
+
+}
