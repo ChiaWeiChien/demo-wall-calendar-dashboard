@@ -12,7 +12,7 @@ export const APP_VERSION = "0.1.2";
 export const TZ = "Asia/Taipei";
 
 // Debug logging
-export const DEBUG = true;
+export const DEBUG = false;
 
 // Weather refresh interval (milliseconds)
 // export const WEATHER_UPDATE_RATE = 3 * 1000; // 30 seconds for test
