@@ -6,13 +6,17 @@
  */
 
 // App version
-export const APP_VERSION = "0.1.2";
+export const APP_VERSION = "0.1.3";
 
 // Timezone
 export const TZ = "Asia/Taipei";
 
 // Debug logging
 export const DEBUG = false;
+
+// Daily reload at 4:00:00
+export const DAILY_RELOAD = true;
+export const DAILY_RELOAD_TIME = {hour: 4, minute: 0, second: 0, ms: 0,};
 
 // Weather refresh interval (milliseconds)
 // export const WEATHER_UPDATE_RATE = 3 * 1000; // 30 seconds for test

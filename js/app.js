@@ -5,7 +5,7 @@
  * License: MIT
  */
 
-import { CLOCK_TICK_RATE } from "./config.js";
+import { CLOCK_TICK_RATE, DAILY_RELOAD, DAILY_RELOAD_TIME } from "./config.js";
 import { getInitialLang, setLang } from "./i18n.js";
 import { loadCache, getTaipeiYYYYMMDD, makeWeatherCacheKey } from "./cache.js";
 import { setupNetworkStatus, updateNetworkText, refreshDateTexts, setUpdatedAtNow, updateVersionText, formatTimeHHMM, applyYiJiClampForPortrait } from "./ui.js";
@@ -306,6 +306,57 @@ async function hardClearAllCaches() {
   }
 }
 
+/**
+ * Schedule a daily soft reload to maintain long-running stability.
+ *
+ * This function schedules a single `location.reload()` at a fixed local time
+ * every day (e.g. 04:00), and is intended for wall-mounted / kiosk-style usage.
+ *
+ * Why this exists:
+ * - iOS Safari (especially on older iPads) may gradually accumulate
+ *   memory or internal state over long-running sessions.
+ * - A periodic soft reload is a reliable and low-cost way to:
+ *   - Reset the JavaScript execution environment
+ *   - Clear accumulated console logs and JS heap
+ *   - Re-align timers and schedulers
+ * - localStorage and cached data are preserved, so the UI recovers instantly.
+ *
+ * Behavior:
+ * - If DAILY_RELOAD is disabled, this function does nothing.
+ * - If the configured reload time for today has already passed,
+ *   the reload is scheduled for the next day.
+ * - The reload is performed using `location.reload()`,
+ *   which resets JS state but keeps browser caches and storage.
+ *
+ * Notes:
+ * - This is designed for unattended, long-running displays.
+ * - The reload time should be chosen to minimize user visibility
+ *   (e.g. early morning).
+ */
+function scheduleDailyReload() {
+  if (!DAILY_RELOAD) return;
+
+  const now = new Date();
+  const next = new Date();
+  const { hour, minute, second, ms } = DAILY_RELOAD_TIME;
+
+  next.setHours(hour, minute, second, ms);
+
+  // If today's reload time has already passed, schedule for tomorrow
+  if (next <= now) next.setDate(next.getDate() + 1);
+
+  const delay = next.getTime() - now.getTime();
+
+  log.info("Daily reload scheduled", {
+    at: next.toString(),
+    inMs: delay,
+  });
+
+  setTimeout(() => {
+    location.reload();
+  }, delay);
+}
+
 
 function main() {
   updateVersionText();
@@ -326,6 +377,7 @@ function main() {
   setInterval(tickClock, CLOCK_TICK_RATE);
 
   scheduleAlignedEvery2Hours(refreshWeatherOnly);
+  scheduleDailyReload();
 }
 
 main();

@@ -169,7 +169,7 @@ async function fetchTodayWeatherByLatLon(latitude, longitude) {
   url.searchParams.set("latitude", String(latitude));
   url.searchParams.set("longitude", String(longitude));
   url.searchParams.set("timezone", TZ);
-  url.searchParams.set("forecast_days", "1");
+  url.searchParams.set("forecast_days", "2");
   url.searchParams.set("temperature_unit", "celsius");
 
   url.searchParams.set("current", [
