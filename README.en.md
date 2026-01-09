@@ -167,19 +167,67 @@ This makes it possible to:
 
 ---
 
-### Notes on Custom Domains (Optional)
+### Local and LAN Testing Notes (Optional)
 
-If you use a custom domain:
-
-- HTTPS is required (GitHub Pages provides this automatically)
-- No additional configuration is needed
-- Safari handles the app identically to `github.io` domains
+This project is a pure front-end web application and **must be accessed via HTTP / HTTPS**.  
+Opening the page directly using `file://` is not supported.
 
 ---
 
+#### 🖥 Local Testing (Localhost)
+
+For development or debugging purposes, you can start a simple HTTP server in the project directory:
+
+```text
+python -m http.server 8000
+```
+
+Then open the project in your browser at:
+
+```text
+http://localhost:8000
+```
+
+> ⚠️ Note  
+> Localhost access is recommended **for development and debugging only**.  
+> **On iOS Safari, caching, background refresh, and autoplay behavior  
+> may differ from those observed in a deployed environment.**
+
+---
+
+#### 🌐 LAN Testing (Same Wi-Fi Network)
+
+If you want to test the project on another device (such as an iPad)  
+within the **same local network (e.g., the same Wi-Fi)**:
+
+1. Ensure the computer and the iPad are connected to the same network
+2. Obtain the computer’s local IP address (for example, `192.168.1.100`)
+3. Open the following URL in Safari on the iPad:
+
+```text
+http://192.168.1.100:8000
+```
+
+> ⚠️ Note  
+> LAN testing is still considered a **testing environment**.  
+> **Without a formal domain and HTTPS, iOS Safari behavior  
+> may differ from GitHub Pages or other production deployments.**
+
+---
+
+#### 🌍 Recommended Deployment
+
+For long-term use or wall-mounted display scenarios,  
+accessing the project via **GitHub Pages or a custom domain** is recommended:
+
+- No additional backend or server setup required
+- More stable and predictable browser behavior
+- Suitable for continuous, always-on display use
+
 > 💡 Tip  
-> GitHub Pages is preferred over local file access (`file://`)  
-> because it avoids Safari caching quirks and provides more predictable behavior.
+> **A formal domain (GitHub Pages or a custom domain) provides the most stable  
+> and predictable iOS Safari behavior**, and is recommended for final deployment.
+
 
 ---
 
@@ -196,9 +244,12 @@ API endpoint:
 https://api.open-meteo.com/v1/forecast
 ```
 
-- Latitude / longitude based queries
-- Explicit `timezone=Asia/Taipei`
-- Cached and refreshed every 2 hours
+- Queried by latitude and longitude
+- Timezone is fixed to `timezone=Asia/Taipei`
+- Cache refresh interval: every 2 hours (configurable in [js/config.js](./js/config.js))
+
+> For detailed API documentation, see **[Open-Meteo API Docs](https://open-meteo.com/en/docs)**
+
 
 ### 🗺 Geocoding (Fallback only)
 
@@ -208,9 +259,27 @@ API endpoint:
 https://geocoding-api.open-meteo.com/v1/search
 ```
 
-- Used only when local lookup fails
-- Cached for 7 days
-- Restricted to `countryCode=TW`
+- Used only when local lookup tables fail
+- Query results are cached for 7 days
+- Region is restricted using `countryCode=TW`
+
+> For detailed API documentation, see **[Open-Meteo Geocoding API Docs](https://open-meteo.com/en/docs/geocoding-api)**
+
+### 📅 Lunar Calendar / Yi–Ji Data (PowerLife Almanac API)
+
+API Endpoint：
+
+```text
+https://api.doctorfate.net/query
+```
+
+- Requests are sent directly from the browser via HTTPS (GET)
+- An API key is required in the request header: `X-API-Key: PowerLife-APP-2025-v1`
+- Uses `year / month / day` parameters to query daily lunar calendar data
+- Cache strategy: daily cache (refreshed only when the date changes)
+- Yi/Ji terms are mapped via the local `data/yiji.json` dictionary and rendered in **Traditional Chinese and English** (with simplified/traditional alias support)
+
+> For more information, see **[PowerLife Almanac API Documentation](https://api.doctorfate.net)**
 
 ---
 
@@ -288,11 +357,11 @@ The system will:
 
 ## 📜 License
 
-MIT
+MIT License. See [LICENSE](./LICENSE) for details.
 
 ---
 
 ## Motivation
 
-> Old iPads make excellent wall displays —  
-> **as long as you design *with* Safari, not against it.**
+> This project explores how legacy iPads can be repurposed as always-on wall displays  
+> by designing within the constraints and behavior of iOS Safari.

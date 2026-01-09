@@ -25,60 +25,30 @@ let yijiIndex = null;
 export const UNKNOWN_YIJI = new Set();
 window.WCD_UNKNOWN_YIJI = UNKNOWN_YIJI;
 
-// Minimal Simplified->Traditional mapping for common Yi/Ji tokens.
-const S2T_TERM = new Map([
-  ["开市", "開市"],
-  ["纳财", "納財"],
-  ["纳采", "納采"],
-  ["纳畜", "納畜"],
-  ["动土", "動土"],
-  ["修造", "修造"],
-  ["上梁", "上樑"],
-  ["入宅", "入宅"],
-  ["祈福", "祈福"],
-  ["掘井", "掘井"],
-  ["安门", "安門"],
-  ["安葬", "安葬"],
-  ["作灶", "作灶"],
-  ["补垣", "補垣"],
-  ["开池", "開池"],
-  ["取渔", "取漁"],
-  ["嫁娶", "嫁娶"],
-  ["安床", "安床"],
-  ["立券", "立券"],
-  ["伐木", "伐木"],
-  ["栽种", "栽種"],
-  ["经络", "經絡"],
-  ["开光", "開光"],
-  ["出行", "出行"],
-  ["修坟", "修墳"],
-  ["造桥", "造橋"],
-  ["造庙", "造廟"],
-  ["祭祀", "祭祀"],
-  ["祠堂", "祠堂"],
-  ["安香", "安香"],
-  ["谢土", "謝土"],
-  ["解除", "解除"],
-  ["交易", "交易"],
-  ["无", "無"],
-]);
-
 function normalizeYiJiToken(raw) {
   let s = String(raw || "").trim();
+  if (!s) return "";
 
+  // Normalize common separators to spaces
   s = s
     .replace(/[、，,；;。\.]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
 
+  // If API accidentally returns multiple tokens in one string,
+  // keep the first token only.
   if (s.includes(" ")) s = s.split(" ")[0];
-  if (S2T_TERM.has(s)) s = S2T_TERM.get(s);
 
   return s;
 }
 
 /**
- * Load Yi/Ji dictionary and build lookup index.
+ * Load Yi/Ji dictionary (v5) and build lookup index.
+ * Dict format:
+ * {
+ *   version: number,
+ *   items: [{ zhCN, zhTW, en, aliases?: [] }, ...]
+ * }
  */
 export async function loadYiJiDict() {
   if (yijiIndex) return;
@@ -92,9 +62,18 @@ export async function loadYiJiDict() {
   for (const it of (dict.items || [])) {
     if (!it) continue;
 
-    const key = normalizeYiJiToken(it.key);
-    if (key) index.set(key, it);
+    // Canonical keys
+    const kCN = normalizeYiJiToken(it.zhCN);
+    const kTW = normalizeYiJiToken(it.zhTW);
 
+    // 1) zhCN is canonical (most important)
+    if (kCN) index.set(kCN, it);
+
+    // 2) Also index zhTW (even if aliases not provided)
+    //    so input could be either simplified or traditional.
+    if (kTW) index.set(kTW, it);
+
+    // 3) Index aliases if any
     if (Array.isArray(it.aliases)) {
       for (const a of it.aliases) {
         const ak = normalizeYiJiToken(a);
@@ -104,25 +83,32 @@ export async function loadYiJiDict() {
   }
 
   yijiIndex = index;
-  log("YiJi dict ready, size =", yijiIndex.size);
+  log("YiJi dict ready, size =", yijiIndex.size, "version =", dict?.version);
 }
+
 
 function translateYiJiTerm(term) {
   const raw = String(term || "").trim();
   const key = normalizeYiJiToken(raw);
   if (!key) return "";
+
+  // Dict not loaded yet: return original normalized token
   if (!yijiIndex) return key;
 
-  const it = yijiIndex?.get(key);
+  const it = yijiIndex.get(key);
   if (!it) {
-    UNKNOWN_YIJI.add(key);
-    log.warn("Unknown YiJi term:", key, "from:", raw);
+    // Keep raw key for debugging; do not spam duplicates
+    if (!UNKNOWN_YIJI.has(key)) {
+      UNKNOWN_YIJI.add(key);
+      log.warn("Unknown YiJi term:", key, "from:", raw);
+    }
     return key;
   }
 
-  if (getCurrentLang() === "en") return it.en || it.zhHant || it.key || key;
-  return it.zhHant || it.key || key;
+  if (getCurrentLang() === "en") return it.en || it.zhTW || it.zhCN || key;
+  return it.zhTW || it.zhCN || key;
 }
+
 
 // ================================
 // Jieqi mapping

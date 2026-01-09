@@ -170,20 +170,66 @@ https://<username>.github.io/<repo>/?lang=en&loc=Xinyi%20District,%20Taipei
 
 ---
 
-### 自訂網域（選用）
+### 本機與區域網路測試說明（選用）
 
-若使用自訂網域：
-
-- 必須啟用 HTTPS（GitHub Pages 可自動提供）
-- 無需額外設定
-- Safari 行為與 `github.io` 網域完全相同
+本專案為純前端網頁應用，**必須透過 HTTP / HTTPS 存取**，  
+不支援以 `file://` 方式直接開啟。
 
 ---
 
+#### 🖥 本機測試（Localhost）
+
+在開發或除錯時，可於專案目錄中啟動簡易 HTTP 伺服器：
+
+```text
+python -m http.server 8000
+```
+
+並透過以下網址存取：
+
+```text
+http://localhost:8000
+```
+
+> ⚠️ 注意  
+> 本機測試僅建議用於開發與除錯用途。  
+> **iOS Safari 在 `localhost` 環境下的快取、背景刷新與自動播放行為，  
+> 可能與正式部署時略有差異。**
+
+---
+
+#### 🌐 區域網路測試（LAN / Same Wi-Fi）
+
+若希望在 **同一個區域網路（例如同一個 Wi-Fi）** 下，  
+使用其他裝置（如 iPad）進行測試，可透過主機的區域網路 IP 存取：
+
+1. 確認電腦與 iPad 連線至同一個網路
+2. 在電腦上取得電腦的本機 IP（例如 `192.168.1.100`）
+3. 使用以下格式在 iPad Safari 中開啟：
+
+```text
+http://192.168.1.100:8000
+```
+
+> ⚠️ 注意  
+> 區域網路測試仍屬於測試環境。  
+> **在未使用正式網域與 HTTPS 的情況下，  
+> iOS Safari 的行為可能與 GitHub Pages 或正式部署環境不同。**
+
+
+---
+
+#### 🌍 正式部署建議
+
+實際長時間使用時，建議透過 **GitHub Pages 或自訂網域** 存取本專案：
+
+- 不需額外後端設定
+- 瀏覽器行為與正式環境一致
+- 可避免 Safari 在測試環境下的非預期限制
+
 > 💡 提示  
-> 相較於直接以 `file://` 開啟檔案，  
-> **GitHub Pages 能提供更穩定、可預期的 Safari 行為**，  
-> 建議作為實際部署與長時間顯示的方式。
+> **正式網域能提供更穩定、可預期的 iOS Safari 行為**，  
+> 適合用於長時間壁掛顯示。
 
 
 ---
@@ -202,8 +248,10 @@ https://api.open-meteo.com/v1/forecast
 ```
 
 - 使用經緯度查詢
-- 明確指定 `timezone=Asia/Taipei`
-- 快取更新頻率：每 2 小時
+- 時區採用 `timezone=Asia/Taipei`
+- 快取更新頻率：每 2 小時（可由 [js/config.js](./js/config.js) 中修改）
+
+> 詳細 API 說明請參考 **[Open-Meteo API 文件](https://open-meteo.com/en/docs)**
 
 ### 🗺 地理位置查詢（Fallback）
 
@@ -214,8 +262,26 @@ https://geocoding-api.open-meteo.com/v1/search
 ```
 
 - 僅在本地查表失敗時使用
-- 查詢結果快取 7 天
-- 限定 `countryCode=TW`
+- 設定查詢結果快取 7 天
+- 地區碼參數固定用 `countryCode=TW`
+
+> 詳細 API 說明請參考 **[Open-Meteo Geocoding API 文件](https://open-meteo.com/en/docs/geocoding-api)**
+
+### 📅 農民曆資訊（PowerLife 萬年曆 API）
+
+API Endpoint：
+
+```text
+https://api.doctorfate.net/query
+```
+
+- 由瀏覽器直接以 HTTPS 發送請求（GET）
+- 需要在 Header 帶入 API Key：`X-API-Key: PowerLife-APP-2025-v1`
+- 使用西元年月日（ year / month / day）查詢指定日期的農民曆資料
+- 快取策略：每日快取（跨日才更新一次），避免每次刷新都打 API
+- 宜/忌詞彙會透過本地 data/yiji.json 查表，輸出支援中/英文顯示（含簡繁 aliases 相容）
+
+> 詳細 API 說明請參考 **[PowerLife 萬年曆 API 文件](https://api.doctorfate.net)**
 
 ---
 
@@ -322,11 +388,11 @@ CSS 採用 **分層（Layered）結構**，避免單一巨大樣式檔難以維�
 
 ## 📜 License
 
-MIT
+MIT License. 詳細請參考 [LICENSE](./LICENSE)。
 
 ---
 
 ## Motivation
 
-> 舊 iPad 非常適合當壁掛顯示器，  
-> 前提是 **不要對抗 Safari，而是順著它的行為設計。**
+> 本專案旨在探索如何將舊款 iPad 重新利用為長時間穩定顯示的壁掛裝置，  
+> 並在設計上充分考量與遵循 iOS Safari 的行為與限制。

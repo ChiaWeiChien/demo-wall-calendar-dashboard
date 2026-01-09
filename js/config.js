@@ -6,7 +6,7 @@
  */
 
 // App version
-export const APP_VERSION = "0.1.3";
+export const APP_VERSION = "0.1.4";
 
 // Timezone
 export const TZ = "Asia/Taipei";

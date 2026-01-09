@@ -1,493 +1,120 @@
 {
-  "version": 4,
-  "source": "user_provided_zhHant_list",
-  "note": "v4: includes missing terms (交易/開池/取漁/探病/作灶) + filled en for common terms. Use as data/yiji.json.",
+  "version": 5,
+  "source": "user_2025_zhCN_terms_with_zhTW_en_and_min_aliases",
+  "note": "v5: generated from 2025 Yi/Ji unique term list (zhCN). Added zhTW + short English labels. Added minimal aliases (zhTW) for common simplified/traditional mismatches to eliminate unknown-term warnings.",
   "items": [
-    {
-      "category": "婚姻類",
-      "key": "嫁娶",
-      "zhHant": "嫁娶",
-      "descZhHant": "結婚典禮、迎親之日",
-      "en": "Wedding",
-      "aliases": []
-    },
-    {
-      "category": "婚姻類",
-      "key": "納采",
-      "zhHant": "納采",
-      "descZhHant": "同結婚姻，收授聘金；俗稱：訂婚、文定、過訂、完聘、大定",
-      "en": "Betrothal",
-      "aliases": []
-    },
-    {
-      "category": "婚姻類",
-      "key": "問名",
-      "zhHant": "問名",
-      "descZhHant": "男女雙方各取年庚，供於神案，經數日無事即可合婚",
-      "en": "Matchmaking",
-      "aliases": []
-    },
-    {
-      "category": "婚姻類",
-      "key": "歸寧",
-      "zhHant": "歸寧",
-      "descZhHant": "新婚後，新娘與新郎第一次回娘家",
-      "en": "Bride Returning Home",
-      "aliases": []
-    },
-    {
-      "category": "婚姻類",
-      "key": "安床",
-      "zhHant": "安床",
-      "descZhHant": "安置睡床臥鋪，一為新婚安置新床、二為事事不順重新安新床",
-      "en": "Set Up Bed",
-      "aliases": []
-    },
-    {
-      "category": "婚姻類",
-      "key": "合帳",
-      "zhHant": "合帳",
-      "descZhHant": "製作蚊帳之事，今應指安置窗簾",
-      "en": "Set Curtains",
-      "aliases": []
-    },
-    {
-      "category": "婚姻類",
-      "key": "冠笄",
-      "zhHant": "冠笄",
-      "descZhHant": "男弱冠，女及笄，為青少年的所舉行的成年禮儀式(一般為16歲)",
-      "en": "Coming-of-Age Ceremony",
-      "aliases": []
-    },
-    {
-      "category": "婚姻類",
-      "key": "訂盟",
-      "zhHant": "訂盟",
-      "descZhHant": "訂婚儀式的一種，俗稱小聘(訂)",
-      "en": "Engagement Pact",
-      "aliases": []
-    },
-    {
-      "category": "營建類",
-      "key": "入宅",
-      "zhHant": "入宅",
-      "descZhHant": "遷入新宅，即所謂新居落成典禮",
-      "en": "Move In",
-      "aliases": []
-    },
-    {
-      "category": "營建類",
-      "key": "安香",
-      "zhHant": "安香",
-      "descZhHant": "安土地公或祖先之神位",
-      "en": "Install Incense Altar",
-      "aliases": []
-    },
-    {
-      "category": "營建類",
-      "key": "安門",
-      "zhHant": "安門",
-      "descZhHant": "房屋裝設門戶等工事",
-      "en": "Install Door",
-      "aliases": []
-    },
-    {
-      "category": "營建類",
-      "key": "修造",
-      "zhHant": "修造",
-      "descZhHant": "僅指陽宅之改造與修理",
-      "en": "Renovation",
-      "aliases": []
-    },
-    {
-      "category": "營建類",
-      "key": "動土",
-      "zhHant": "動土",
-      "descZhHant": "(起基)是指陽宅建築開始動工；註：常被誤用為(破土)",
-      "en": "Groundbreaking",
-      "aliases": []
-    },
-    {
-      "category": "營建類",
-      "key": "上樑",
-      "zhHant": "上樑",
-      "descZhHant": "裝上建築物屋頂的大梁，西式建築指屋頂之灌漿(預拌混凝土)",
-      "en": "Raise the Beam",
-      "aliases": []
-    },
-    {
-      "category": "營建類",
-      "key": "豎柱",
-      "zhHant": "豎柱",
-      "descZhHant": "架馬俗稱起工架馬；指建築場所之鷹架",
-      "en": "Erect Pillars",
-      "aliases": []
-    },
-    {
-      "category": "營建類",
-      "key": "掘井",
-      "zhHant": "掘井",
-      "descZhHant": "開渠、築陰溝、開魚池；開鑿水井、池塘",
-      "en": "Dig a Well",
-      "aliases": []
-    },
-    {
-      "category": "營建類",
-      "key": "破屋",
-      "zhHant": "破屋",
-      "descZhHant": "壞垣、拆卸；拆除房屋或圍牆",
-      "en": "Demolish House",
-      "aliases": []
-    },
-    {
-      "category": "營建類",
-      "key": "補垣",
-      "zhHant": "補垣",
-      "descZhHant": "塞穴、填坑、覆井；塞穴指堵塞洞穴或蟻穴",
-      "en": "Repair Wall",
-      "aliases": []
-    },
-    {
-      "category": "祭祀類",
-      "key": "祭祀",
-      "zhHant": "祭祀",
-      "descZhHant": "指祠堂拜祭祖先或廟宇之祭拜神明等事項",
-      "en": "Worship",
-      "aliases": []
-    },
-    {
-      "category": "祭祀類",
-      "key": "祈福",
-      "zhHant": "祈福",
-      "descZhHant": "祈求神明降福或設醮還願等事",
-      "en": "Pray for Blessings",
-      "aliases": []
-    },
-    {
-      "category": "祭祀類",
-      "key": "求嗣",
-      "zhHant": "求嗣",
-      "descZhHant": "指向神明祈求後嗣（子孫）之意",
-      "en": "Pray for Offspring",
-      "aliases": []
-    },
-    {
-      "category": "祭祀類",
-      "key": "開光",
-      "zhHant": "開光",
-      "descZhHant": "佛像塑成後點眼入神，供奉上位之事",
-      "en": "Consecration",
-      "aliases": []
-    },
-    {
-      "category": "祭祀類",
-      "key": "沐浴",
-      "zhHant": "沐浴",
-      "descZhHant": "祈福設醮或還願時清潔身體之謂",
-      "en": "Purification Bath",
-      "aliases": []
-    },
-    {
-      "category": "祭祀類",
-      "key": "齋醮",
-      "zhHant": "齋醮",
-      "descZhHant": "廟宇建醮前需舉行的齋戒儀式",
-      "en": "Fasting Ritual",
-      "aliases": []
-    },
-    {
-      "category": "祭祀類",
-      "key": "酬神",
-      "zhHant": "酬神",
-      "descZhHant": "還願，答謝神恩",
-      "en": "Thank the Deities",
-      "aliases": []
-    },
-    {
-      "category": "祭祀類",
-      "key": "塑繪",
-      "zhHant": "塑繪",
-      "descZhHant": "雕刻寺廟繪畫雕刻神像，或人像等",
-      "en": "Sculpting and Painting",
-      "aliases": []
-    },
-    {
-      "category": "祭祀類",
-      "key": "普渡",
-      "zhHant": "普渡",
-      "descZhHant": "祭祀超渡陰界的好兄弟",
-      "en": "Universal Salvation Ritual",
-      "aliases": []
-    },
-    {
-      "category": "祭祀類",
-      "key": "造廟",
-      "zhHant": "造廟",
-      "descZhHant": "建造寺，廟，宮，觀，堂",
-      "en": "Build Temple",
-      "aliases": []
-    },
-    {
-      "category": "生活類",
-      "key": "出行",
-      "zhHant": "出行",
-      "descZhHant": "指遠行，如：外出旅行，觀光遊覽",
-      "en": "Travel",
-      "aliases": []
-    },
-    {
-      "category": "生活類",
-      "key": "移徙",
-      "zhHant": "移徙",
-      "descZhHant": "指搬家遷移住所之意",
-      "en": "Relocation",
-      "aliases": []
-    },
-    {
-      "category": "生活類",
-      "key": "分居",
-      "zhHant": "分居",
-      "descZhHant": "大家庭分家，另起爐灶，適用於分爐之出火，安香",
-      "en": "Household Separation",
-      "aliases": []
-    },
-    {
-      "category": "生活類",
-      "key": "出火",
-      "zhHant": "出火",
-      "descZhHant": "火指香火，即宜動神位之意",
-      "en": "Move Stove/Fire",
-      "aliases": []
-    },
-    {
-      "category": "生活類",
-      "key": "理髮",
-      "zhHant": "理髮",
-      "descZhHant": "僅指初生嬰兒第一次剃胎髮，或出家之落髪",
-      "en": "Haircut (Ritual)",
-      "aliases": []
-    },
-    {
-      "category": "生活類",
-      "key": "習藝",
-      "zhHant": "習藝",
-      "descZhHant": "學習特殊技藝，行拜師禮",
-      "en": "Learn a Craft",
-      "aliases": []
-    },
-    {
-      "category": "生活類",
-      "key": "栽種",
-      "zhHant": "栽種",
-      "descZhHant": "栽種植物，或接枝",
-      "en": "Planting",
-      "aliases": []
-    },
-    {
-      "category": "生活類",
-      "key": "納畜",
-      "zhHant": "納畜",
-      "descZhHant": "牧養、收買入家畜、家禽、寵物等",
-      "en": "Acquire Livestock",
-      "aliases": []
-    },
-    {
-      "category": "生活類",
-      "key": "捕捉",
-      "zhHant": "捕捉",
-      "descZhHant": "斷蟻，撲滅家中或農作物之害蟲生物",
-      "en": "Pest Control",
-      "aliases": []
-    },
-    {
-      "category": "生活類",
-      "key": "放水",
-      "zhHant": "放水",
-      "descZhHant": "建築，清理池塘或水族箱後，將水注入蓄池",
-      "en": "Fill with Water",
-      "aliases": []
-    },
-    {
-      "category": "喪葬類",
-      "key": "修墳",
-      "zhHant": "修墳",
-      "descZhHant": "修理墳墓",
-      "en": "Repair Tomb",
-      "aliases": []
-    },
-    {
-      "category": "喪葬類",
-      "key": "啟鑽",
-      "zhHant": "啟鑽",
-      "descZhHant": "指洗骨、俗謂、拾金(撿骨)",
-      "en": "Exhume Remains",
-      "aliases": []
-    },
-    {
-      "category": "喪葬類",
-      "key": "破土",
-      "zhHant": "破土",
-      "descZhHant": "僅指埋葬用的陰宅墓地破土，與一般建築房屋的(陽宅、動土)不同",
-      "en": "Grave Digging",
-      "aliases": []
-    },
-    {
-      "category": "喪葬類",
-      "key": "安葬",
-      "zhHant": "安葬",
-      "descZhHant": "處理埋葬事宜的儀式(行喪：指到喪家慰問遺族)",
-      "en": "Burial",
-      "aliases": []
-    },
-    {
-      "category": "喪葬類",
-      "key": "立碑",
-      "zhHant": "立碑",
-      "descZhHant": "豎立墓碑或紀念碑",
-      "en": "Erect Tombstone",
-      "aliases": []
-    },
-    {
-      "category": "喪葬類",
-      "key": "謝土",
-      "zhHant": "謝土",
-      "descZhHant": "建築物完工後，所舉行的祭祀",
-      "en": "Thank Earth Deities",
-      "aliases": []
-    },
-    {
-      "category": "喪葬類",
-      "key": "除服",
-      "zhHant": "除服",
-      "descZhHant": "脫下喪服(成服：即穿上喪服)",
-      "en": "Remove Mourning Clothes",
-      "aliases": []
-    },
-    {
-      "category": "喪葬類",
-      "key": "解除",
-      "zhHant": "解除",
-      "descZhHant": "掃捨；指沖洗宅舍、解除災厄",
-      "en": "Remove Misfortune",
-      "aliases": []
-    },
-    {
-      "category": "工商類",
-      "key": "開市",
-      "zhHant": "開市",
-      "descZhHant": "(開工)新公司行號開業、開幕或年初頭一天開張動工",
-      "en": "Open for Business",
-      "aliases": []
-    },
-    {
-      "category": "工商類",
-      "key": "掛匾",
-      "zhHant": "掛匾",
-      "descZhHant": "指懸掛招牌或各種匾額",
-      "en": "Hang Signboard",
-      "aliases": []
-    },
-    {
-      "category": "工商類",
-      "key": "立券",
-      "zhHant": "立券",
-      "descZhHant": "交易、訂立各種契約互相買賣之事",
-      "en": "Sign Contract",
-      "aliases": []
-    },
-    {
-      "category": "工商類",
-      "key": "納財",
-      "zhHant": "納財",
-      "descZhHant": "五穀入倉，商賈之置貨、收租、收帳、討債，借款購屋，貸款等",
-      "en": "Receive Wealth",
-      "aliases": []
-    },
-    {
-      "category": "工商類",
-      "key": "開倉",
-      "zhHant": "開倉",
-      "descZhHant": "出貨財，商賈之出貨、銷貨、放債",
-      "en": "Open Warehouse",
-      "aliases": []
-    },
-    {
-      "category": "工商類",
-      "key": "經絡",
-      "zhHant": "經絡",
-      "descZhHant": "安機器 安紡車",
-      "en": "Install Machinery",
-      "aliases": []
-    },
-    {
-      "category": "工商類",
-      "key": "造車",
-      "zhHant": "造車",
-      "descZhHant": "製造水陸交通工具，也適用新車交車、牽車",
-      "en": "Build Vehicle",
-      "aliases": []
-    },
-    {
-      "category": "工商類",
-      "key": "交易",
-      "zhHant": "交易",
-      "descZhHant": "買賣往來、商品或財物交換之事",
-      "zhHans": "",
-      "en": "Trading",
-      "aliases": []
-    },
-    {
-      "category": "營建類",
-      "key": "開池",
-      "zhHant": "開池",
-      "descZhHant": "開鑿池塘、水池或水景之事",
-      "zhHans": "",
-      "en": "Dig Pond",
-      "aliases": [
-        "开池"
-      ]
-    },
-    {
-      "category": "生活類",
-      "key": "取漁",
-      "zhHant": "取漁",
-      "descZhHant": "捕撈魚類、水產之事",
-      "zhHans": "",
-      "en": "Fishing",
-      "aliases": [
-        "取渔"
-      ]
-    },
-    {
-      "category": "生活類",
-      "key": "探病",
-      "zhHant": "探病",
-      "descZhHant": "探望病人、問候慰問之事",
-      "zhHans": "",
-      "en": "Visit the Sick",
-      "aliases": []
-    },
-    {
-      "category": "生活類",
-      "key": "作灶",
-      "zhHant": "作灶",
-      "descZhHant": "設置或修造爐灶、廚灶之事",
-      "zhHans": "",
-      "en": "Build Stove",
-      "aliases": []
-    },
-
-
-    {
-      "category": "其他類",
-      "key": "無",
-      "zhHant": "無",
-      "descZhHant": "無特別宜忌事項",
-      "zhHans": "",
-      "en": "No Special Events",
-      "aliases": [
-        "无"
-      ]
-    }
+    { "zhCN": "破屋", "zhTW": "破屋", "en": "Demolish house" },
+    { "zhCN": "坏垣", "zhTW": "壞垣", "en": "Repair wall", "aliases": ["壞垣"] },
+    { "zhCN": "治病", "zhTW": "治病", "en": "Treat illness" },
+    { "zhCN": "馀事勿取", "zhTW": "餘事勿取", "en": "Avoid other matters", "aliases": ["餘事勿取"] },
+    { "zhCN": "安床", "zhTW": "安床", "en": "Set bed" },
+    { "zhCN": "架马", "zhTW": "架馬", "en": "Harness horse", "aliases": ["架馬"] },
+    { "zhCN": "祭祀", "zhTW": "祭祀", "en": "Worship" },
+    { "zhCN": "塑绘", "zhTW": "塑繪", "en": "Sculpt & paint", "aliases": ["塑繪"] },
+    { "zhCN": "开光", "zhTW": "開光", "en": "Consecrate", "aliases": ["開光"] },
+    { "zhCN": "出行", "zhTW": "出行", "en": "Travel" },
+    { "zhCN": "理发", "zhTW": "理髮", "en": "Haircut", "aliases": ["理髮"] },
+    { "zhCN": "伐木", "zhTW": "伐木", "en": "Cut wood" },
+    { "zhCN": "作梁", "zhTW": "作樑", "en": "Make beam", "aliases": ["作樑"] },
+    { "zhCN": "开柱眼", "zhTW": "開柱眼", "en": "Drill column holes", "aliases": ["開柱眼"] },
+    { "zhCN": "开厕", "zhTW": "開廁", "en": "Build toilet", "aliases": ["開廁"] },
+    { "zhCN": "畋猎", "zhTW": "畋獵", "en": "Hunting", "aliases": ["畋獵"] },
+    { "zhCN": "破土", "zhTW": "破土", "en": "Break ground" },
+    { "zhCN": "入殓", "zhTW": "入殮", "en": "Encoffin", "aliases": ["入殮"] },
+    { "zhCN": "除服", "zhTW": "除服", "en": "End mourning" },
+    { "zhCN": "成服", "zhTW": "成服", "en": "Begin mourning" },
+    { "zhCN": "移柩", "zhTW": "移柩", "en": "Move coffin" },
+    { "zhCN": "启钻", "zhTW": "啟鑽", "en": "Open grave", "aliases": ["啟鑽"] },
+    { "zhCN": "修坟", "zhTW": "修墳", "en": "Repair tomb", "aliases": ["修墳"] },
+    { "zhCN": "立碑", "zhTW": "立碑", "en": "Erect stele" },
+    { "zhCN": "嫁娶", "zhTW": "嫁娶", "en": "Marriage" },
+    { "zhCN": "祈福", "zhTW": "祈福", "en": "Pray blessing" },
+    { "zhCN": "求嗣", "zhTW": "求嗣", "en": "Pray for child" },
+    { "zhCN": "解除", "zhTW": "解除", "en": "Remove bad luck" },
+    { "zhCN": "入宅", "zhTW": "入宅", "en": "Move in" },
+    { "zhCN": "移徙", "zhTW": "移徙", "en": "Relocate" },
+    { "zhCN": "纳畜", "zhTW": "納畜", "en": "Acquire livestock", "aliases": ["納畜"] },
+    { "zhCN": "沐浴", "zhTW": "沐浴", "en": "Bathing" },
+    { "zhCN": "纳财", "zhTW": "納財", "en": "Receive wealth", "aliases": ["納財"] },
+    { "zhCN": "进人口", "zhTW": "進人口", "en": "Add member", "aliases": ["進人口"] },
+    { "zhCN": "栽种", "zhTW": "栽種", "en": "Planting", "aliases": ["栽種"] },
+    { "zhCN": "扫舍", "zhTW": "掃舍", "en": "House cleaning", "aliases": ["掃舍"] },
+    { "zhCN": "捕捉", "zhTW": "捕捉", "en": "Capture" },
+    { "zhCN": "结网", "zhTW": "結網", "en": "Set nets", "aliases": ["結網"] },
+    { "zhCN": "斋醮", "zhTW": "齋醮", "en": "Ritual", "aliases": ["齋醮"] },
+    { "zhCN": "作灶", "zhTW": "作灶", "en": "Build stove" },
+    { "zhCN": "裁衣", "zhTW": "裁衣", "en": "Tailoring" },
+    { "zhCN": "订盟", "zhTW": "訂盟", "en": "Make pact", "aliases": ["訂盟"] },
+    { "zhCN": "纳采", "zhTW": "納采", "en": "Engagement", "aliases": ["納采"] },
+    { "zhCN": "安机械", "zhTW": "安機械", "en": "Install machinery", "aliases": ["安機械"] },
+    { "zhCN": "开市", "zhTW": "開市", "en": "Open market", "aliases": ["開市"] },
+    { "zhCN": "立券", "zhTW": "立券", "en": "Make contract" },
+    { "zhCN": "安碓磑", "zhTW": "安碓磑", "en": "Install mill" },
+    { "zhCN": "造车器", "zhTW": "造車器", "en": "Make vehicles", "aliases": ["造車器"] },
+    { "zhCN": "安葬", "zhTW": "安葬", "en": "Burial" },
+    { "zhCN": "合帐", "zhTW": "合帳", "en": "Set curtains", "aliases": ["合帳"] },
+    { "zhCN": "经络", "zhTW": "經絡", "en": "Meridians", "aliases": ["經絡"] },
+    { "zhCN": "交易", "zhTW": "交易", "en": "Trade" },
+    { "zhCN": "教牛马", "zhTW": "教牛馬", "en": "Train livestock", "aliases": ["教牛馬"] },
+    { "zhCN": "挂匾", "zhTW": "掛匾", "en": "Hang signboard", "aliases": ["掛匾"] },
+    { "zhCN": "出火", "zhTW": "出火", "en": "Move stove" },
+    { "zhCN": "拆卸", "zhTW": "拆卸", "en": "Dismantle" },
+    { "zhCN": "动土", "zhTW": "動土", "en": "Start construction", "aliases": ["動土"] },
+    { "zhCN": "上梁", "zhTW": "上樑", "en": "Raise beam", "aliases": ["上樑"] },
+    { "zhCN": "开池", "zhTW": "開池", "en": "Dig pond", "aliases": ["開池"] },
+    { "zhCN": "补垣", "zhTW": "補垣", "en": "Mend wall", "aliases": ["補垣"] },
+    { "zhCN": "取渔", "zhTW": "取漁", "en": "Fishing", "aliases": ["取漁"] },
+    { "zhCN": "修饰垣墙", "zhTW": "修飾垣牆", "en": "Decorate walls", "aliases": ["修飾垣牆"] },
+    { "zhCN": "平治道涂", "zhTW": "平治道塗", "en": "Repair roads", "aliases": ["平治道塗"] },
+    { "zhCN": "会亲友", "zhTW": "會親友", "en": "Meet friends", "aliases": ["會親友"] },
+    { "zhCN": "起基", "zhTW": "起基", "en": "Lay foundation" },
+    { "zhCN": "造仓", "zhTW": "造倉", "en": "Build granary", "aliases": ["造倉"] },
+    { "zhCN": "牧养", "zhTW": "牧養", "en": "Herding", "aliases": ["牧養"] },
+    { "zhCN": "修造", "zhTW": "修造", "en": "Build/repair" },
+    { "zhCN": "造畜稠", "zhTW": "造畜稠", "en": "Build pen" },
+    { "zhCN": "针灸", "zhTW": "針灸", "en": "Acupuncture", "aliases": ["針灸"] },
+    { "zhCN": "定磉", "zhTW": "定磉", "en": "Set plinth" },
+    { "zhCN": "放水", "zhTW": "放水", "en": "Drain water" },
+    { "zhCN": "谢土", "zhTW": "謝土", "en": "Thanks to earth", "aliases": ["謝土"] },
+    { "zhCN": "安香", "zhTW": "安香", "en": "Set incense" },
+    { "zhCN": "盖屋", "zhTW": "蓋屋", "en": "Build house", "aliases": ["蓋屋"] },
+    { "zhCN": "安门", "zhTW": "安門", "en": "Install door", "aliases": ["安門"] },
+    { "zhCN": "掘井", "zhTW": "掘井", "en": "Dig well" },
+    { "zhCN": "入学", "zhTW": "入學", "en": "Start school", "aliases": ["入學"] },
+    { "zhCN": "问名", "zhTW": "問名", "en": "Ask name", "aliases": ["問名"] },
+    { "zhCN": "造桥", "zhTW": "造橋", "en": "Build bridge", "aliases": ["造橋"] },
+    { "zhCN": "行丧", "zhTW": "行喪", "en": "Funeral rites", "aliases": ["行喪"] },
+    { "zhCN": "开仓", "zhTW": "開倉", "en": "Open storage", "aliases": ["開倉"] },
+    { "zhCN": "无", "zhTW": "無", "en": "None", "aliases": ["無"] },
+    { "zhCN": "置产", "zhTW": "置產", "en": "Buy property", "aliases": ["置產"] },
+    { "zhCN": "探病", "zhTW": "探病", "en": "Visit sick" },
+    { "zhCN": "诸事不宜", "zhTW": "諸事不宜", "en": "Nothing suitable", "aliases": ["諸事不宜"] },
+    { "zhCN": "造庙", "zhTW": "造廟", "en": "Build temple", "aliases": ["造廟"] },
+    { "zhCN": "出货财", "zhTW": "出貨財", "en": "Spend wealth", "aliases": ["出貨財"] },
+    { "zhCN": "词讼", "zhTW": "詞訟", "en": "Lawsuit", "aliases": ["詞訟"] },
+    { "zhCN": "雇佣", "zhTW": "雇傭", "en": "Hire", "aliases": ["雇傭"] },
+    { "zhCN": "冠笄", "zhTW": "冠笄", "en": "Coming-of-age" },
+    { "zhCN": "求医", "zhTW": "求醫", "en": "See doctor", "aliases": ["求醫"] },
+    { "zhCN": "开生坟", "zhTW": "開生墳", "en": "Build living tomb", "aliases": ["開生墳"] },
+    { "zhCN": "合寿木", "zhTW": "合壽木", "en": "Make coffin", "aliases": ["合壽木"] },
+    { "zhCN": "塞穴", "zhTW": "塞穴", "en": "Fill holes" },
+    { "zhCN": "竖柱", "zhTW": "豎柱", "en": "Erect columns", "aliases": ["豎柱"] },
+    { "zhCN": "分居", "zhTW": "分居", "en": "Separate living" },
+    { "zhCN": "赴任", "zhTW": "赴任", "en": "Take office" },
+    { "zhCN": "纳婿", "zhTW": "納婿", "en": "Take son-in-law", "aliases": ["納婿"] },
+    { "zhCN": "习艺", "zhTW": "習藝", "en": "Learn skills", "aliases": ["習藝"] },
+    { "zhCN": "筑堤", "zhTW": "築堤", "en": "Build dike", "aliases": ["築堤"] },
+    { "zhCN": "整手足甲", "zhTW": "整手足甲", "en": "Nail care" },
+    { "zhCN": "造船", "zhTW": "造船", "en": "Build boat" },
+    { "zhCN": "修门", "zhTW": "修門", "en": "Repair door", "aliases": ["修門"] },
+    { "zhCN": "断蚁", "zhTW": "斷蟻", "en": "Pest control", "aliases": ["斷蟻"] },
+    { "zhCN": "开渠", "zhTW": "開渠", "en": "Dig canal", "aliases": ["開渠"] },
+    { "zhCN": "割蜜", "zhTW": "割蜜", "en": "Harvest honey" },
+    { "zhCN": "归岫", "zhTW": "歸岫", "en": "Return home", "aliases": ["歸岫"] },
+    { "zhCN": "雕刻", "zhTW": "雕刻", "en": "Carving" },
+    { "zhCN": "普渡", "zhTW": "普渡", "en": "Universal offering" },
+    { "zhCN": "合脊", "zhTW": "合脊", "en": "Roof ridge" },
+    { "zhCN": "乘船", "zhTW": "乘船", "en": "Boat travel" },
+    { "zhCN": "归宁", "zhTW": "歸寧", "en": "Visit parents", "aliases": ["歸寧"] }
   ]
 }
